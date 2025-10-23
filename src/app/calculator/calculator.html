@@ -1,7 +1,22 @@
 <div class="calculator">
-  <input type="text" disabled />
+  <!-- Display area -->
+  <div class="display">
+    <div class="top-display">{{ topDisplay }}</div>
+    <div class="main-display">{{ display }}</div>
+  </div>
 
+  <!-- Buttons grid -->
   <div class="buttons">
-    <button *ngFor="let btn of buttons">{{ btn }}</button>
+    <button
+      *ngFor="let btn of buttons"
+      [ngClass]="{
+        operator: ['+', '-', 'x', '÷'].includes(btn),
+        equal: btn === '=',
+        clear: btn === 'C' || btn === 'CE'
+      }"
+      (click)="onPress(btn)"
+    >
+      {{ btn }}
+    </button>
   </div>
 </div>
