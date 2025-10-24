@@ -52,20 +52,23 @@ body {
 button {
   height: 50px;
   font-size: 1.2rem;
-  background-color: #f7f7f7;
   border: none;
   border-radius: 12px;
   transition: background-color 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
-
-button:hover {
-  background-color: #e0e0e0;
-}
-
 button:active {
   transform: scale(0.98);
+}
+
+button.num {
+  background-color: #f7f7f7;
+    color: black;
+}
+
+button.num:hover {
+  background-color: #e0e0e0;
 }
 
 button.operator {
@@ -86,11 +89,4 @@ button.equal:hover {
   background-color: #2195f3d8;
 }
 
-button.clear {
-  background-color: #aaaa;
-  color: black;
-}
 
-button.clear:hover {
-  background-color: #aaaaaa64;
-}

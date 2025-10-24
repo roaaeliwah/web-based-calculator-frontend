@@ -1,18 +1,16 @@
 <div class="calculator">
-  <!-- Display area -->
   <div class="display">
     <div class="top-display">{{ topDisplay }}</div>
     <div class="main-display">{{ display }}</div>
   </div>
 
-  <!-- Buttons grid -->
   <div class="buttons">
     <button
       *ngFor="let btn of buttons"
       [ngClass]="{
-        operator: ['+', '-', 'x', '÷'].includes(btn),
+        operator: ['%', 'CE', 'C', '⌫', '1/x', 'x²', '√x', '+', '-', 'x', '÷'].includes(btn),
         equal: btn === '=',
-        clear: btn === 'C' || btn === 'CE'
+        num: ['0', '1', '2', '3', '4', '5', '6', '7', '8','9'],
       }"
       (click)="onPress(btn)"
     >

@@ -14,7 +14,7 @@ export class Calculator {
   num1: number =0;
   num2: number =0;
   operation: string = '+';
-  resultShown: boolean = false;
+  resultShown: boolean = true;
 
   constructor(private http: HttpClient) {}
 
@@ -48,7 +48,7 @@ export class Calculator {
     }
 
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(btn)) {
-      if(this.display='0') this.display = btn;
+      if(this.display ==='0') this.display = btn;
       else this.display += btn;
       this.resultShown=false;
       return;
@@ -76,6 +76,7 @@ export class Calculator {
       this.resultShown=false;
       if(this.display==='' && this.topDisplay!='') {
         this.topDisplay = this.topDisplay.slice(0, -1) + btn;
+        this.operation = btn;
         return;
       }
       this.num2 = parseFloat(this.display);
@@ -153,22 +154,23 @@ export class Calculator {
 
 
   handleUnary(operation: string) {
-  const currentValue = parseFloat(this.display);
+    
+    const currentValue = parseFloat(this.display);
 
-  this.http.post('http://localhost:8080/api/calculator/calculate', {
-    num1: currentValue,
-    num2: 0, //ignored by backend
-    operation: operation
-  }, { responseType: 'text' }).subscribe({
-    next: (res) => {
-      this.display = res;             
-      this.num1 = parseFloat(res);     
-    },
-    error: () => {
-      this.display = 'E';
-    }
-  });
-}
+    this.http.post('http://localhost:8080/api/calculator/calculate', {
+      num1: currentValue,
+      num2: 0, //ignored by backend
+      operation: operation
+    }, { responseType: 'text' }).subscribe({
+      next: (res) => {
+        this.display = res;             
+        this.num2 = parseFloat(res);     
+      },
+      error: () => {
+        this.display = 'E';
+      }
+    });
+  }
 
 
 
