@@ -101,28 +101,24 @@ export class Calculator {
     }
 
     if(btn === '1/x') {
-      this.resultShown=false;
       this.topDisplay += '1/(' + this.display + ')';
       this.handleUnary('reciprocal');
       return;
     }
 
     if(btn === 'x²') {
-      this.resultShown=false;
       this.topDisplay += 'sqr(' + this.display + ')';
       this.handleUnary('square');
       return;
     }
 
     if(btn === '√x') {
-      this.resultShown=false;
       this.topDisplay += 'sqrt(' + this.display + ')';
       this.handleUnary('sqrt');
       return;
     }
     
     if(btn === '+/-') {
-      this.resultShown=false;
       this.handleUnary('negate');
       return;
     }
@@ -154,7 +150,6 @@ export class Calculator {
 
 
   handleUnary(operation: string) {
-    
     const currentValue = parseFloat(this.display);
 
     this.http.post('http://localhost:8080/api/calculator/calculate', {
@@ -170,6 +165,11 @@ export class Calculator {
         this.display = 'E';
       }
     });
+    
+    if(this.resultShown) {
+      this.num1 = 0;
+    }
+    this.resultShown=false;
   }
 
 
