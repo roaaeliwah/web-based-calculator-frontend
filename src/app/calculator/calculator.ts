@@ -42,7 +42,7 @@ export class Calculator {
         this.topDisplay='';
         return;
       }
-      if(this.display.length > 1) this.display.slice(0, -1);
+      if(this.display.length > 1) this.display = this.display.slice(0, -1);
       else this.display='0';
       return;
     }
