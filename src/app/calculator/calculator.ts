@@ -149,6 +149,16 @@ export class Calculator {
       return;
     }
 
+    if(btn === '%') {
+      if(this.display==='E') return;
+      if(this.topDisplay.includes('=')) {
+        this.topDisplay='';
+      }
+      this.topDisplay += this.display + '%';
+      this.handleUnary('%');
+      return;
+    }
+
     if (btn === '=') {
       //if operator with no second operand does nthn and waits for 2nd operand
       if (['+', '-', 'x', '÷'].includes(this.topDisplay[this.topDisplay.length - 1]) && this.display==='') return;
@@ -191,7 +201,7 @@ export class Calculator {
       this.num2 = parseFloat(this.display);
       this.operation = '+';
     }
-    this.resultShown=true;
+    this.resultShown=false;
   }
 
 
