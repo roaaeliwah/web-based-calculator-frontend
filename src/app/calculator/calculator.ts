@@ -14,7 +14,7 @@ export class Calculator {
   num1: number =0;
   num2: number =0;
   operation: string = '+';
-  resultShown: boolean = true;
+  resultShown: boolean = false;
 
   constructor(private http: HttpClient) {}
 
@@ -76,16 +76,18 @@ export class Calculator {
         this.operation = btn;
         this.num1 = parseFloat(this.display);
         this.display='';
+        this.resultShown=false; 
         return;
       }
-
-      this.resultShown=false;
-      if(this.display==='' && this.topDisplay!='') {
+      else if(this.display==='' && this.topDisplay!='') {
         this.topDisplay = this.topDisplay.slice(0, -1) + btn;
         this.operation = btn;
         return;
       }
-      this.num2 = parseFloat(this.display);
+
+      this.resultShown=false;
+      if(this.display==='') this.num2 = 0;
+      else this.num2 = parseFloat(this.display);
 
       this.http.post('http://localhost:8080/api/calculator/calculate', {
       num1: this.num1,
@@ -102,7 +104,6 @@ export class Calculator {
       }
       });
       this.operation = btn;
-      this.resultShown=false;
       return;
     }
 
@@ -146,9 +147,7 @@ export class Calculator {
         this.display = 'E';
       }
       });
-      this.num1=0;
       this.num2=0;
-      this.operation='+';
       this.resultShown = true;
       return;
     }
