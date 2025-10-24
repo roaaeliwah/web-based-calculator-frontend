@@ -49,6 +49,12 @@ export class Calculator {
 
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(btn)) {
       if(this.display ==='0') this.display = btn;
+      else if(this.resultShown){
+        this.display = btn;
+        this.num1=0;
+        this.num2=0;
+        this.operation='+';
+      } 
       else this.display += btn;
       this.resultShown=false;
       return;
@@ -126,7 +132,7 @@ export class Calculator {
     if (btn === '=') {
       if(this.resultShown) return;
       this.num2 = parseFloat(this.display);
-      this.topDisplay='';
+      this.topDisplay= this.num1 + this.operation + this.num2 + '=' ;
       this.http.post('http://localhost:8080/api/calculator/calculate', {
       num1: this.num1,
       num2: this.num2,
@@ -171,40 +177,6 @@ export class Calculator {
     }
     this.resultShown=false;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // evaluateBackend(num1: number, num2: number, operation: string) {
-  //   const opMap: any = { 'x': '*', '÷': '/' }; // match backend symbols
-  //   const finalOp = opMap[operation] || operation;
-
-  //   // this.http.post('http://localhost:8080/api/calculator/calculate', {
-  //   //   num1: num1,
-  //   //   num2: num2,
-  //   //   operation: finalOp
-  //   // }, { responseType: 'text' }).subscribe({
-  //   //   next: (res) => {
-  //   //     this.display = res;
-  //   //     this.num1 = parseFloat(res);
-  //   //     this.resultShown = true;
-  //   //   },
-  //   //   error: () => {
-  //   //     this.display = 'E';
-  //   //     this.resultShown = true;
-  //   //   }
-  //   // });
-  // }
 
 
 }
