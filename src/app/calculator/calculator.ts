@@ -38,6 +38,10 @@ export class Calculator {
     }
 
     if (btn === '⌫') {
+      if(this.resultShown) {
+        this.topDisplay='';
+        return;
+      }
       if(this.display.length > 1) this.display.slice(0, -1);
       else this.display='0';
       return;
@@ -46,17 +50,34 @@ export class Calculator {
     if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(btn)) {
       if(this.display='0') this.display = btn;
       else this.display += btn;
+      this.resultShown=false;
       return;
     }
 
     if (btn === '.') {
+      if(this.resultShown) this.display='0' + btn;
       if (!this.display.includes('.')) {
         this.display += '.';
       }
+      this.resultShown=false;
       return;
     }
 
     if (['+', '-', 'x', '÷'].includes(btn)) {
+
+      if(this.resultShown) {
+        this.topDisplay=this.display + btn;
+        this.operation = btn;
+        this.num1 = parseFloat(this.display);
+        this.display='';
+        return;
+      }
+
+      this.resultShown=false;
+      if(this.display==='' && this.topDisplay!='') {
+        this.topDisplay = this.topDisplay.slice(0, -1) + btn;
+        return;
+      }
       this.num2 = parseFloat(this.display);
 
       this.http.post('http://localhost:8080/api/calculator/calculate', {
@@ -74,29 +95,34 @@ export class Calculator {
       }
       });
       this.operation = btn;
+      this.resultShown=false;
       return;
     }
 
     if(btn === '1/x') {
+      this.resultShown=false;
       this.topDisplay += '1/(' + this.display + ')';
       this.handleUnary('reciprocal');
       return;
     }
 
     if(btn === 'x²') {
+      this.resultShown=false;
       this.topDisplay += 'sqr(' + this.display + ')';
       this.handleUnary('square');
       return;
     }
 
     if(btn === '√x') {
+      this.resultShown=false;
       this.topDisplay += 'sqrt(' + this.display + ')';
       this.handleUnary('sqrt');
       return;
     }
     
     if(btn === '+/-') {
-      this.handleUnary('sqrt');
+      this.resultShown=false;
+      this.handleUnary('negate');
       return;
     }
 
